@@ -1,0 +1,2 @@
+g++ -o ejecutable .\practica1.cpp
+.\ejecutable
