@@ -69,7 +69,7 @@ template <typename T>
 int desequilibrio_rec(typename Abin<T>::nodo n, const Abin<T>& A) {
     if(n == Abin<T>::NODO_NULO) return 0;
     else return max(
-            abs(altura_rec(A.hijoIzqdoB(n), A) - altura_rec(A.hijoDrchoB(n), A)),               //1º param. de max: desequilibrio de n
+            abs(altura(A.hijoIzqdoB(n)) - altura(A.hijoDrchoB(n))),                             //1º param. de max: desequilibrio de n
             max(desequilibrio_rec(A.hijoIzqdoB(n), A), desequilibrio_rec(A.hijoDrchoB(n), A))   //2º param. de max: maximo del desequilibrio entre sus hijos
         );
 }
