@@ -23,7 +23,7 @@ int grado_rec(typename Agen<T>::nodo n, const Agen<T>& A) {
     int grado;
     while(aux != Agen<T>::NODO_NULO) {
         grado = grado_rec(aux, A);
-        if(grado > gradoMax) gradoMax = grado;
+        gradoMax = max(grado, gradoMax);
         aux = A.hermDrcho(aux);
     }
     return gradoMax;
