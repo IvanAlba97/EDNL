@@ -74,7 +74,15 @@ int desequilibrio(const Agen<T> A) {
 template <typename T>
 int desequilibrio_rec(typename Agen<T>::nodo n, const Agen& A) {
     if(n == Agen<T>::NODO_NULO) return 0;
-    else 
+    else {
+        int min = altura(A);
+        typename Agen<T>::nodo hijo = A.hijoIzqdo(n);
+        while(A.hermDrcho(hijo) != Agen<T>::NODO_NULO) {
+            min = min(min, altura(hijo));
+            hijo = A.hermDrcho(hijo);
+        }
+        return abs(altura(A) - min);
+    }
 }
 
 /**
@@ -82,6 +90,8 @@ int desequilibrio_rec(typename Agen<T>::nodo n, const Agen& A) {
  * Dado un árbol de enteros A y un entero x, implementa un subprograma que realice la poda
  * de A a partir de x. Se asume que no hay elementos repetidos en A.
  */
+
+// PISTA: SE PARECE A LA FUNCION DESTRUIR NODOS DEL TAD, HACERLO EN POSTORDEN
 
 typename Agen<int>::nodo buscar(int x, const Agen<int>& A) {
     if(A.arbolVacio()) return Agen<int>::NODO_NULO;
