@@ -157,3 +157,8 @@ int main() {
 
     cout << endl;
 }
+
+/* PARA EJECUTAR
+    g++ -o ejecutable .\practica2.cpp
+    .\ejecutable
+*/
