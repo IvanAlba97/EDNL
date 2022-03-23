@@ -3,23 +3,15 @@
  * pasado que futuro, es decir, que tiene más antecedentes propios que descendientes propios.
  */
 
-#include "abin.h"
-
 template <typename T>
-int nNostalgicos(const Abin<T>& A) {
-    if(!A.arbolVacioB()) return nNostalgicos_rec(A.raizB(), A);
+int nDescendientes_rec(typename Abin<T>::nodo n, const Abin<T>& A) {
+    if(n == Abin<T>::NODO_NULO) return 0;
+    else return 1 + nDescendientes_rec(A.hijoIzqdoB(n), A) + nDescendientes_rec(A.hijoDrchoB(n), A);
 }
 
 template <typename T>
-int nNostalgicos_rec(typename Abin<T>::nodo n, const Abin<T>& A) {
-    if(esNostalgico(n), A) return 1 + nNostalgicos_rec(A.hijoIzqdoB(n), A) + nNostalgicos_rec(A.hijoDrchoB(n), A);
-    else return nNostalgicos_rec(A.hijoIzqdoB(n), A) + nNostalgicos_rec(A.hijoDrchoB(n), A);
-}
-
-template <typename T>
-bool esNostalgico(typename Abin<T>::nodo n, const Abin<T>& A) {
-    if(nAntecedentesPropios_rec(n, A) > nDescendientesPropios(n, A)) return true;
-    else return false;
+int nDescendientesPropios(typename Abin<T>::nodo n, const Abin<T>& A) {
+    return nDescendientes_rec(A.hijoIzqdoB(n), A) + nDescendientes_rec(A.hijoDrchoB(n), A); 
 }
 
 template <typename T>
@@ -29,12 +21,18 @@ int nAntecedentesPropios_rec(typename Abin<T>::nodo n, const Abin<T>& A) {
 }
 
 template <typename T>
-int nDescendientesPropios(typename Abin<T>::nodo n, const Abin<T>& A) {
-    return nDescendientes_rec(A.hijoIzqdoB(n), A) + nDescendientes_rec(A.hijoDrchoB(n), A); 
+bool esNostalgico(typename Abin<T>::nodo n, const Abin<T>& A) {
+    if(nAntecedentesPropios_rec(n, A) > nDescendientesPropios(n, A)) return true;
+    else return false;
 }
 
 template <typename T>
-int nDescendientes_rec(typename Abin<T>::nodo n, const Abin<T>& A) {
-    if(n == Abin<T>::NODO_NULO) return 0;
-    else return 1 + nDescendientes_rec(A.hijoIzqdoB(n), A) + nDescendientes_rec(A.hijoDrchoB(n), A);
+int nNostalgicos_rec(typename Abin<T>::nodo n, const Abin<T>& A) {
+    if(esNostalgico(n, A)) return 1 + nNostalgicos_rec(A.hijoIzqdoB(n), A) + nNostalgicos_rec(A.hijoDrchoB(n), A);
+    else return nNostalgicos_rec(A.hijoIzqdoB(n), A) + nNostalgicos_rec(A.hijoDrchoB(n), A);
+}
+
+template <typename T>
+int nNostalgicos(const Abin<T>& A) {
+    if(!A.arbolVacioB()) return nNostalgicos_rec(A.raizB(), A);
 }
